@@ -47,7 +47,8 @@ class DBStorage:
 
     def new(self, obj):
         """Adds the object to the current database session"""
-        self.__session.add(obj)
+        if obj not in self.__session:
+            self.__session.add(obj)
 
     def save(self):
         """Saves storage dictionary to file"""
