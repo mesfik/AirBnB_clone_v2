@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from models.review import Review
-from models.user import User
 import models
 
 
@@ -22,8 +21,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Integer, default=0, nullable=False)
         longitude = Column(Integer, default=0, nullable=False)
-        cities = relationship("City", back_populates='places')
-        user = relationship("User", back_populates='places')
+        cities = relationship('City', back_populates='places')
+        user = relationship('User', back_populates='places')
 
         reviews = relationship('Review', cascade='all, delete-orphan',
                               backref='place')
