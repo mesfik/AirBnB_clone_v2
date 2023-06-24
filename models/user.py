@@ -5,7 +5,6 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import models
 from models.review import Review
-from models.city import City
 from models.place import Place
 
 
