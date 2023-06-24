@@ -6,7 +6,6 @@ from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-
 class State(BaseModel, Base):
     """Representation of state """
     if models.storage_type == "db":
