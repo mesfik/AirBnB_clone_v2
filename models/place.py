@@ -19,8 +19,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
-        city_id = Column(String(60), nullable=False, ForeignKey('cities.id'))
-        user_id = Column(String(60), nullable=False, ForeignKey('users.id'))
+        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
 
     else:
         city_id = ""
