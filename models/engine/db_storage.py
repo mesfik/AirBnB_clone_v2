@@ -36,18 +36,18 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """Query on the current database session"""
         if cls is not None:
-            cls_session = {}
-            for key, value in self.__session.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    cls_session[key] = value
-            return cls_session
-        return DBStorage.__session
+            ob = self.__session.query(cls).all()
+            cls_se = {obj.__class__.__name__ + '.' + obj.id: obj for obj in ob}
+            return cls_se
+        return {}
 
     def new(self, obj):
         """Adds the object to the current database session"""
-        self.__session.add(obj)
+        if obj:
+            if self.__session.object_session(obj) is None:
+                self.__session.add(obj)
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -59,7 +59,7 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """create the current database session (self.__session)
+        """Create the current database session (self.__session)
         from the engine (self.__engine)"""
 
         Base.metadata.create_all(self.__engine)
