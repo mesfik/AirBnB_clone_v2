@@ -8,14 +8,14 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ class state that is inherited from basemdel and base"""
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-
-    if models.storage_type == 'db':
-        cities = relationship("City", cascade="all, delete", backref="state")
+    """Representation of state """
+    if models.storage_type == "db":
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", order_by=City.id, back_populates='state')
 
     else:
+        name = ""
         @property
         def cities(self):
             """getter for list of city instances related to the state"""
@@ -24,5 +24,4 @@ class State(BaseModel, Base):
             for city in all_cities.values():
                 if city.state_id == self.id:
                     city_list.append(city)
-
             return city_list
