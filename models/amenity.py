@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 import models
 from sqlalchemy import Column, String, Table, ForeignKey
 from sqlalchemy.orm import relationship
-from models.place import Place
 
 
 class Amenity(BaseModel, Base):
@@ -19,6 +18,6 @@ class Amenity(BaseModel, Base):
                                        ForeignKey('amenities.id'),
                                        nullable=False, primary_key=True))
         place = relationship('Place', secondary=place_amenities,
-                             backref='amenities')
+                             backref='amenity')
     else:
         name = ""
