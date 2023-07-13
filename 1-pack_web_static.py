@@ -2,8 +2,6 @@
 """
 Packing a web_static to deploy
 """
-
-
 from fabric.api import local
 from datetime import datetime
 
