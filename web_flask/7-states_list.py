@@ -17,10 +17,11 @@ def state_list():
     a function to display states id and name
     """
     states = storage.all(State).values()
+    states = sorted(states, key=lambda k: k.name)
     return render_template('7-states_list.html', states=states)
 
 @app.teardown_appcontext
-def teardown():
+def teardown(error):
     """ closing the sqlAlchemy"""
     storage.close()
 
