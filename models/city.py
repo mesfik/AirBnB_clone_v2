@@ -16,7 +16,8 @@ class City(BaseModel, Base):
         state_id = Column(String(60), ForeignKey('states.id'))
         state = relationship('State', back_populates='cities')
         places = relationship('Place', cascade='all, delete-orphan',
-                              backref='cities_places', overlaps='places_cities')
+                              backref='cities_places',
+                              overlaps='places_cities')
     else:
         name = ""
         state_id = ""
