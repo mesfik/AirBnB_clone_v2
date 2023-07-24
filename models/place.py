@@ -1,12 +1,23 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer
+from sqlalchemy import Column, String, ForeignKey, Integer, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
 from models.amenity import Amenity
 import models
 
+
+if models.storage_type == 'db':
+    place_amenity = Table('place_amenity', Base.metadata,
+            Column('place_id', String(60),
+                ForeignKey('places.id', onupdate='CASCADE',
+                    ondelete='CASCADE'),
+                primary_key=True),
+            Column('amenity_id', String(60),
+                ForeignKey('amenities.id', onupdate='CASCADE',
+                    ondelete='CASCADE'),
+                primary_key=True))
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -22,13 +33,13 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Integer, default=0, nullable=False)
         longitude = Column(Integer, default=0, nullable=False)
-        cities = relationship('City', back_populates='places')
-        user = relationship('User', back_populates='places')
+        cities = relationship('City', back_populates='places', overlaps="cities_places")
+        user = relationship('User', back_populates='places', overlaps="user_places")
 
-        reviews = relationship('Review', cascade='all, delete-orphan',
-                               backref='place')
-        amenities = relationship('Amenity', secondary=lambda: place_amenities,
-                                 viewonly=False, backref='place')
+        reviews = relationship("Review", cascade="delete",backref="place_reviews", )
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                 backref="place_amenities",
+                                 viewonly=False)
     else:
         city_id = ""
         user_id = ""
