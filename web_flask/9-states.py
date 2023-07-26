@@ -17,7 +17,7 @@ def state():
     a function to display cities by states
     """
     states = storage.all(State).values()
-    return render_template("9-states.html", state=states)
+    return render_template("7-states_list.html", states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
